@@ -58,39 +58,39 @@ router.route("/login").post((req, res) => {
                         email: user.email
                     }
 
-                    var token = jwt.sign(userData,process.env.SECRET_KEY,{
-                        expiresIn:2000
+                    var token = jwt.sign(userData, process.env.SECRET_KEY, {
+                        expiresIn: 2000
                     });
 
                     res.send(token);
                 }
-                else{
+                else {
                     res.json("Cannot find a user in the system");
                 }
             }
-            else{
+            else {
                 res.json("Cannot find a user in the system");
             }
         })
 
 });
 
-router.route("/profile").get((req,res)=>{
-    var decodeToken = jwt.verify(req.header['authorization'],process.env.SECRET_KEY);
+router.route("/profile").get((req, res) => {
+    var decodeToken = jwt.verify(req.header['authorization'], process.env.SECRET_KEY);
 
     User.findOne({
-        _id:decodeToken.id
+        _id: decodeToken.id
     })
-    .then((data)=>{
-        if(data){
-            res.json(data);
-        }
-        else{
-            res.send("User does not exist");
-        }
-    }).catch((err)=>{
-        res.send(err);
-    })
+        .then((data) => {
+            if (data) {
+                res.json(data);
+            }
+            else {
+                res.send("User does not exist");
+            }
+        }).catch((err) => {
+            res.send(err);
+        })
 });
 
 module.exports = router;

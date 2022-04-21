@@ -20,8 +20,11 @@ mongoose.connect(MONGODB_URL,{useNewUrlParser:true})
 });
 
 const userRouter = require("./routes/users");
+app.use("/user",userRouter);
 
-app.use("/",userRouter);
+app.route("/").get((req,res)=>{
+    res.send("<center><h1>🔐 User Authentication API</h1><h3>Developed by Tharuka Gayashan Fernando</h3></center>")
+})
 
 app.listen(PORT,()=>{
     console.log(`Server up and run on port ${PORT}`);
